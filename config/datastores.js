@@ -13,6 +13,14 @@
  * https://sailsjs.com/config/datastores
  */
 
+
+const cfg = {
+  host: 'localhost',
+  port: 27017,
+  database: process.env.MONGO_DATABASE || 'mydb'
+};
+
+
 module.exports.datastores = {
 
 
@@ -48,9 +56,8 @@ module.exports.datastores = {
     *    (See https://sailsjs.com/config/datastores for help.)                 *
     *                                                                          *
     ***************************************************************************/
-    // adapter: 'sails-mysql',
-    // url: 'mysql://user:password@host:port/database',
-
+    adapter: require('sails-mongo-cloud'),
+    url: 'mongodb://' + cfg.host + ':' + cfg.port + '/' + cfg.database,
   },
 
 

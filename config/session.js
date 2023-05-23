@@ -9,6 +9,29 @@
  * https://sailsjs.com/config/session
  */
 
+const cfg = {
+  host: process.env.MONGO_HOST || 'localhost',
+  port: process.env.MONGO_PORT || 27017,
+  database: process.env.MONGO_DATABASE || 'prensadaoDB',
+  user: process.env.MONGO_USER,
+  password: process.env.MONGO_PWD,
+};
+
+let url;
+if (process.env.NODE_ENV === 'production' && cfg.useatlas) {
+  url = 'mongodb+srv://' + cfg.user + ':' + cfg.password + '@' + cfg.host + '/' + cfg.database + '?retryWrites=true&w=majority';
+} else if (process.env.NODE_ENV === 'production'){
+  url = 'mongodb://' + cfg.user + ':' + cfg.password + '@' + cfg.host + '/' + cfg.database + '?retryWrites=true';
+} else {
+// Localhost may not use username / password
+  if (!cfg.user) {
+    url = 'mongodb://' + cfg.host + '/' + cfg.database + '?retryWrites=true';
+  } else {
+    url = 'mongodb://' + cfg.user + ':' + cfg.password + '@' + cfg.host + '/' + cfg.database + '?retryWrites=true';
+  }
+}
+
+
 module.exports.session = {
 
   /***************************************************************************
@@ -18,9 +41,12 @@ module.exports.session = {
   * of your users, forcing them to log in again.                             *
   *                                                                          *
   ***************************************************************************/
-  secret: 'd3df375ad029694b5b96696b1e8b0fbc',
-
-
+  secret: 'omg_this_is_secret!!!!',
+  cookie: {
+    maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+  },
+  adapter: 'connect-mongodb-session',
+  'uri': url,
   /***************************************************************************
   *                                                                          *
   * Customize when built-in session support will be skipped.                 *
