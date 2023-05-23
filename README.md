@@ -1,6 +1,12 @@
 # sails-mongodb-6
 
-a [Sails v1](https://sailsjs.com) application
+a [Sails v1](https://sailsjs.com) application to test MongoDb 6+
+
+Configured backend only with sessions on mongodb.
+
+Only configured localhost development datastore. But can be copied to production datastore.
+
+Run with `npm run dev`.
 
 
 ### Links
