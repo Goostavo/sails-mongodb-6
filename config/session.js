@@ -12,11 +12,14 @@
 const cfg = {
   host: process.env.MONGO_HOST || 'localhost',
   port: process.env.MONGO_PORT || 27017,
-  database: process.env.MONGO_DATABASE || 'prensadaoDB',
+  database: process.env.MONGO_DATABASE || 'mydb',
   user: process.env.MONGO_USER,
   password: process.env.MONGO_PWD,
 };
 
+/**
+ * Multiple configurations. Atlas vs On-premise. With auth and without auth. With host configured. Without host configured.
+ */
 let url;
 if (process.env.NODE_ENV === 'production' && cfg.useatlas) {
   url = 'mongodb+srv://' + cfg.user + ':' + cfg.password + '@' + cfg.host + '/' + cfg.database + '?retryWrites=true&w=majority';
